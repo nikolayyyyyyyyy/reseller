@@ -1,6 +1,7 @@
 package app.condition.service;
 
 import app.condition.model.Condition;
+import app.condition.model.ConditionType;
 import app.condition.repository.ConditionRepository;
 import app.exception.DomainException;
 import app.web.dto.ConditionRequest;
@@ -37,5 +38,9 @@ public class ConditionService {
             return new HashSet<>();
         }
         return new HashSet<>(this.repository.findAll());
+    }
+
+    public Condition getConditionByConditionType(ConditionType conditionType){
+        return this.repository.findByConditionType(conditionType);
     }
 }

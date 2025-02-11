@@ -18,10 +18,10 @@
                                     <img class="mr-2 " src="/img/etiquette.png" alt="Etiquette" width="35px"
                                          height="35px">
                                 </td>
-                                <td style="width: 5%" class="bg-info" th:text="offer.condition.conditionType"></td>
-                                <td class="bg-primary" style="width: 15%" th:text="offer.price"></td>
-                                <td th:text="offer.description"></td>
-                                <td style="width: 15%"><a class="btn-danger btn" th:href="@{/remove-offer}">Remove</a>
+                                <td style="width: 5%" class="bg-info">Condition: <span th:text="${offer.condition.conditionType}"></span></td>
+                                <td class="bg-primary" style="width: 15%" >Price: <span th:text="${offer.price}" €></span></td>
+                                <td th:text="${offer.description}"></td>
+                                <td style="width: 15%"><a class="btn-danger btn" th:href="@{/remove-offer/{id}(id=${offer.id})}">Remove</a>
                                 </td>
                             </tr>
                         </table>
@@ -38,10 +38,10 @@
                                          height="35px">
                                 </td>
                                 <td style="width: 5%" class="bg-info">
-                                    <a th:text="offer.description"></a>
+                                    <a th:text="${offer.description}"></a>
                                 </td>
                                 <td class="bg-primary" style="width: 15%">
-                                    <a th:text="offer.price"></a>
+                                    <a th:text="${offer.price}"></a>
                                 </td>
                             </tr>
                         </table>
@@ -53,17 +53,17 @@
                 <h3 class="mySticky bg-gray text-dark  mb-0 mt-2">All Other Offers</h3>
                 <div class="bg-dark rounded m-auto" style="height: 67vh; overflow: auto">
                     <div>
-                        <div>
+                        <div th:each="offer : ${allPosts}">
                             <br>
                             <ul class="list-group list-group-horizontal text-dark">
                                 <li class="list-group-item">
                                     <table>
                                         <tr>
                                             <td style="width: 35%">
-                                                <a>{sellersUsername} sells:</a>
+                                                <a><span th:text="${offer.owner.getUsername()}"></span> sells:</a>
                                             </td>
                                             <td>
-                                                <a>{offerDescription}</a>
+                                                <a th:text="${offer.description}"></a>
                                             </td>
                                         </tr>
                                     </table>
@@ -72,13 +72,13 @@
                                     <table>
                                         <tr>
                                             <td style="width: 40%">
-                                                <a>Condition: {offerCondition}</a>
+                                                <a>Condition: <span th:text="${offer.condition.getConditionType()}"></span></a>
                                             </td>
                                             <td class="text-primary" style="width: 40%">
-                                                <a>Price: {offerPrice} €</a>
+                                                <a>Price: <span th:text="${offer.price}"></span> €</a>
                                             </td>
                                             <td>
-                                                <a class="ml-3 text-danger" href="/">
+                                                <a class="ml-3 text-danger" th:href="@{/offer-buy/{id}(id=${offer.id})}">
                                                     <img src="/img/buy.png" height="35px" alt=""></a>
                                             </td>
                                         </tr>

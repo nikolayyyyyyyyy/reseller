@@ -7,6 +7,8 @@ import app.web.dto.RegisterRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -22,7 +24,7 @@ public class UserService {
         if(this.userRepository.findByUsername(registerRequest.getUsername()) != null ||
         this.userRepository.findByEmail(registerRequest.getEmail()) != null){
 
-            throw new DomainException("Username or email invalid.");
+            return null;
         }
 
         return this.userRepository.save(User
@@ -36,12 +38,12 @@ public class UserService {
     public User login(LoginRequest loginRequest){
         if(this.userRepository.findByUsername(loginRequest.getUsername()) == null){
 
-            throw new DomainException("Username or password incorrect.");
+            return null;
         }
 
-        if(passwordEncoder.matches(loginRequest.getPassword(),this.userRepository.findByUsername(loginRequest.getUsername()).getPassword())){
+        if(!passwordEncoder.matches(loginRequest.getPassword(),this.userRepository.findByUsername(loginRequest.getUsername()).getPassword())){
 
-            throw new DomainException("Username or password incorrect.");
+            return null;
         }
 
 
